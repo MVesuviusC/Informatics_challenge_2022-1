@@ -95,18 +95,24 @@ printf("")
 ####################
 # Question 8 : 
 printf("Using the mtcars data again, make a barplot of displacement (disp) for each
-143 engine shape (column \"vs\")")
+engine shape (column \"vs\")")
 printf("   ANSWER :")
+# png("images/q8.png")
 gV = c(mean(mtcars[mtcars$vs==0,]$disp), mean(mtcars[mtcars$vs==1,]$disp))
 barplot(gV, names=c("0","1"), axes=TRUE, ylim=c(0,max(gV)*1.2), ylab="mean disp", xlab="vs")
+#dev.off()
 printf("")
 printf("")
 
 
 ####################
-# Question 3 : 
-printf("Add a new column of some sort to the data frame you made in question 3 and assign the output a new variable")
+# Question 23 : 
+printf("Using the mtcars data, make a plot of mpg vs disp, coloring the points by cyl. Include a title. Be sure the colors used are color-blind friendly.")
 printf("   ANSWER :")
+printf("        p-value = %e", t.test(disp ~ vs, mtcars)[[3]])
+#png("images/q23.png")
+#plot(x=mtcars$disp, y=mtcars$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black","blue"), pch=c(17,16), cex=c(1.5,1.5))
+#dev.off()
 printf("")
 printf("")
 

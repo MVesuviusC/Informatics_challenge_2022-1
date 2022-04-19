@@ -38,80 +38,80 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Make a numeric vector at least three elements long
     a) Answer :
-
-    ```{r}
-    > a <- c(0,1,2)
-    > is.vector(a)
-    [1] TRUE
-    ```
-
-    $$\\[0.5in]$$
+    
+        ```{r}
+        > a <- c(0,1,2)
+        > is.vector(a)
+        [1] TRUE
+        ```
+    
+        $$\\[0.5in]$$
 
 2. Make a named list object where the values are 10, 15, 20 and 25 and the
 names of the elements are "Billy", "Eli", "Ali" and "Jordan"
     a) Answer :
-
-    ```{r}
-    > a <- list(10,15,20,25)
-    > names(a) <- c("Billy", "Eli", "Ali", "Jordan")
-    > is.list(a)
-    [1] TRUE
-    > names(a)
-    [1] "Billy"  "Eli"    "Ali"    "Jordan"
-    ```
-
-    $$\\[0.5in]$$
+    
+        ```{r}
+        > a <- list(10,15,20,25)
+        > names(a) <- c("Billy", "Eli", "Ali", "Jordan")
+        > is.list(a)
+        [1] TRUE
+        > names(a)
+        [1] "Billy"  "Eli"    "Ali"    "Jordan"
+        ```
+    
+        $$\\[0.5in]$$
 
 3. Make a data frame where one column is random foods and the second column is
 made-up calorie values
     a) Answer :
-
-    ```{r}
-    > df <- data.frame(c('ice cream','rice','thousand year egg'), c(1000,642,666), stringsAsFactors=FALSE)
-    > colnames(df)<-c("food", "calories")
-    > is.data.frame(df)
-    [1] TRUE
-    > df
-                   food calories
-    1         ice cream     1000
-    2              rice      642
-    3 thousand year egg      666
-    ```
-
-    $$\\[0.5in]$$
+    
+        ```{r}
+        > df <- data.frame(c('ice cream','rice','thousand year egg'), c(1000,642,666), stringsAsFactors=FALSE)
+        > colnames(df)<-c("food", "calories")
+        > is.data.frame(df)
+        [1] TRUE
+        > df
+                       food calories
+        1         ice cream     1000
+        2              rice      642
+        3 thousand year egg      666
+        ```
+    
+        $$\\[0.5in]$$
 
 
 4. Add a new column of some sort to the data frame you made in question 3 and
 assign the output a new variable
     a) Answer :
-
-    ```{r}
-    > df$flavor <- c('tasty','tasty','yuck')
-    > dfnew <- df
-    > dfnew
-                   food calories flavor
-    1         ice cream     1000  tasty
-    2              rice      642  tasty
-    3 thousand year egg      666   yuck
-    ```
-
-    $$\\[0.5in]$$
+    
+        ```{r}
+        > df$flavor <- c('tasty','tasty','yuck')
+        > dfnew <- df
+        > dfnew
+                       food calories flavor
+        1         ice cream     1000  tasty
+        2              rice      642  tasty
+        3 thousand year egg      666   yuck
+        ```
+    
+        $$\\[0.5in]$$
 
 
 5. Remove the column you just added and assign this to a new variable
     a) Answer :
-
-    ```{r}
-    > dfnew2<-dfnew[1:2]
-    > dfnew2
-                   food calories
-    1         ice cream     1000
-    2              rice      642
-    3 thousand year egg      666
-    ```
-
-    $$\\[0.5in]$$
-
+    
+        ```{r}
+        > dfnew2<-dfnew[1:2]
+        > dfnew2
+                       food calories
+        1         ice cream     1000
+        2              rice      642
+        3 thousand year egg      666
+        ```
+    
+        $$\\[0.5in]$$
+    
 
 ## Make basic plots
 
@@ -119,37 +119,39 @@ If you want to use a language other than R, the data can be downloaded here: htt
 
 6. Using the mtcars data, make a scatterplot of displacement (disp) vs mpg
     a) Answer :
-
-    ```{r}
-    > plot(x=mtcars$mpg, y=mtcars$disp)
-    ```
-    ![](images/q6.png){width=50%}
-
-    $$\\[0.5in]$$
-
+    
+        ```{r}
+        > plot(x=mtcars$mpg, y=mtcars$disp)
+        ```
+        ![](images/q6.png){width=50%}
+    
+        $$\\[0.5in]$$
+    
 
 
 7. Using the mtcars data again, make a boxplot of hp separated by cyl
     a) Answer : 
-    ```{r}
-    > boxplot(hp ~ cyl, mtcars)
-    ```
-    ![](images/q7.png){width=50%}
 
-    $$\\[0.5in]$$
-
-
+        ```{r}
+        > boxplot(hp ~ cyl, mtcars)
+        ```
+        ![](images/q7.png){width=50%}
+    
+        $$\\[0.5in]$$
+    
+    
 8. Using the mtcars data again, make a barplot of displacement (disp) for each
 engine shape (column "vs")
     a) Answer : 
-    ```{r}
-    > gV = c(mean(mtcars[mtcars$vs==0,]$disp), mean(mtcars[mtcars$vs==1,]$disp))
-    > barplot(gV, names=c("0","1"), axes=TRUE, ylim=c(0,max(gV)*1.2), ylab="mean disp", xlab="vs")
-    ```
-    ![](images/q8.png){width=50%}
 
-
-    $$\\[0.5in]$$
+        ```{r}
+        > gV = c(mean(mtcars[mtcars$vs==0,]$disp), mean(mtcars[mtcars$vs==1,]$disp))
+        > barplot(gV, names=c("0","1"), axes=TRUE, ylim=c(0,max(gV)*1.2), ylab="mean disp", xlab="vs")
+        ```
+        ![](images/q8.png){width=50%}
+    
+    
+        $$\\[0.5in]$$
 
 
 ## Do a t-test
@@ -157,90 +159,99 @@ engine shape (column "vs")
 9. What is the *p*-value for a *t*-test (using the mtcars data), that tests if
 displacement (disp) varies between engine shapes (column "vs")?
     a) Answer : 
-    ```{r}
-    ```
 
-    $$\\[0.5in]$$
-
-
+        ```{r}
+        > t.test(disp ~ vs, mtcars)[[3]]  # p-value = 2.476526e-06
+        [1] 2.476526e-06
+        ```
+    
+        $$\\[0.5in]$$
+    
+    
 ## Basic unix commands
 
 10. Which command is used to create a new directory?
     a) Answer : 
-    ```{r}
-    ```
 
-    $$\\[0.5in]$$
+        ```{bash}
+        $ mkdir
+        ```
+    
+        $$\\[0.5in]$$
 
 
 11. Which command shows the size of a file?
     a) Answer : 
-    ```{r}
-    ```
 
-    $$\\[0.5in]$$
+        ```{bash}
+        $ du 
+        ```
+    
+        $$\\[0.5in]$$
 
 
 12. Which command lets you delete a file?
     a) Answer : 
-    ```{r}
-    ```
 
-    $$\\[0.5in]$$
+        ```{bash}
+        $ rm
+        ```
+    
+        $$\\[0.5in]$$
 
 
 13. Which command copies a file?
     a) Answer : 
-    ```{r}
-    ```
 
-    $$\\[0.5in]$$
+        ```{bash}
+        $ cp
+        ```
+    
+        $$\\[0.5in]$$
 
 
 14. Which command moves a file from one directory to another?
     a) Answer : 
-    ```{r}
-    ```
 
-    $$\\[0.5in]$$
+        ```{r}
+        $ mv
+        ```
+    
+        $$\\[0.5in]$$
 
 
 ## Basic stats knowledge
 
 15. Does a *t*-test assume that the measurements follow a normal distribution?
     a) Answer : 
-    ```{r}
-    ```
-
-    $$\\[0.5in]$$
-
-
+        Yes
+    
+        $$\\[0.5in]$$
+    
+    
 16. Briefly (1-2 sentences), what is the difference between parametric and
 non-parametric tests?
     a) Answer : 
-    ```{r}
-    ```
-
-    $$\\[0.5in]$$
-
-
+        Non-parametric does NOT assumes that the distribution follows a Gaussian. Parametric tests assume the underlying distribution follows a Gaussian.
+    
+        $$\\[0.5in]$$
+    
+    
 17. Name one method to perform multiple testing correction
     a) Answer : 
-    ```{r}
-    ```
-
-    $$\\[0.5in]$$
-
-
+        Bonferroni correction.
+    
+        $$\\[0.5in]$$
+    
+    
 18. For a set of statistical tests, using a FDR cutoff of 0.1 will, in theory,
 result in what percentage of false positives in your "significant" tests?
     a) Answer : 
-    ```{r}
-    ```
-
-    $$\\[0.5in]$$
-
-
+        10%
+    
+        $$\\[0.5in]$$
+    
+    
 ## Basic file/data formats
 
 19.  What file/data format is this?
@@ -256,12 +267,11 @@ GCACTACACATGCTAGCCGCTGGGGAGATTAGCTCGAGTTGCCCCTTTGCCCGATCCCGGAAGATACGCTCTAAGCTCG
 GCAATCGCTCTTGCCGTGCGAGATGCTAGCAA
 ```
     a) Answer : 
-    ```{r}
-    ```
-
-    $$\\[0.5in]$$
-
-
+        fasta
+    
+        $$\\[0.5in]$$
+    
+    
 20. What file/data format is this?
 
 ```{verbatim, max.height='100px'}
@@ -275,12 +285,11 @@ TNGCTGCAGAATAACCCGGGCTCAGACTC
 F#FFFFFFFF,FFFFFFFFFFFFFFFFF:
 ```
     a) Answer : 
-    ```{r}
-    ```
-
-    $$\\[0.5in]$$
-
-
+        fastq
+    
+        $$\\[0.5in]$$
+    
+    
 21. What file/data format is this?
 
 ```{}
@@ -292,18 +301,16 @@ chr2  158365864  158367031
 chr3  127477031  127478198
 ```
     a) Answer : 
-    ```{r}
-    ```
-
-    $$\\[0.5in]$$
-
-
+        A file showing the lengths of the chromosomes about the centromere (REVISIT).
+    
+        $$\\[0.5in]$$
+    
+    
 22. What are the two main differences between a bam and sam file?
     a) Answer : 
-    ```{r}
-    ```
+        sam is ASCII text, bam is binary and compressed
 
-    $$\\[0.5in]$$
+        $$\\[0.5in]$$
 
 
 ------------------------------------------------------------------------
@@ -315,16 +322,21 @@ chr3  127477031  127478198
 23. Using the mtcars data, make a plot of mpg vs disp, coloring the points by
 cyl. Include a title. Be sure the colors used are color-blind friendly.
     a) Answer : 
-    ```{r}
-    ```
 
-    $$\\[0.5in]$$
+        ```{r}
+        > WRONG plot(x=mtcars$disp, y=mtcars$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black","blue"), pch=c(17,16), cex=c(1.5,1.5))
+        ```
+        ![](images/q23.png){width=50%}
+
+        $$\\[0.5in]$$
 
 
 24. From the previous plot, include a legend for point colors and make the
 title of the legend "Cylinder".
     a) Answer : 
+
     ```{r}
+    > WRONG plot(x=mtcars$disp, y=mtcars$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black","blue"), pch=c(17,16), cex=c(1.5,1.5))
     ```
 
     $$\\[0.5in]$$
