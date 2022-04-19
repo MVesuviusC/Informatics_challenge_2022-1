@@ -1,0 +1,268 @@
+<!--
+pandoc -f markdown answers.Rmd -o answers.pdf 
+-->
+---
+title: "Answers to Informatics Challenge! 2022"
+output: pdf_document
+date: 2022-04-19
+abstract: These are my answer's to the Informatics Challenge. I'm considering
+          myself as an ADVANCED user.
+---
+<!--
+header-includes:
+  - \hypersetup{colorlinks=true,
+            urlcolor=blue,
+            pdfborderstyle={/S/U/W 1}}
+- - -
+\definecolor{codegray}{gray}{0.9}
+\newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
+
+\maketitle
+\tableofcontents
+\pagebreak
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+-->
+
+------------------------------------------------------------------------
+
+## Are you submitting in the beginner or advanced category?
+0. Advanced.
+
+------------------------------------------------------------------------
+
+# Beginner questions - 1 point per question
+
+## --R-specific-- Data and variable types
+
+1. Make a numeric vector at least three elements long
+    a) Answer :
+
+    ```{r}
+    > a <- c(0,1,2)
+    > is.vector(a)
+    [1] TRUE
+    ```
+
+2. Make a named list object where the values are 10, 15, 20 and 25 and the
+nams of the elements are "Billy", "Eli", "Ali" and "Jordan"
+
+3. Make a data frame where one column is random foods and the second column is
+mad-up calorie values
+
+4. Add a new column of some sort to the data frame you made in question 3 and
+assgn the output a new variable
+
+5. Remove the column you just added and assign this to a new variable
+
+## Make basic plots
+
+You can access a test dataset in R using the following code:
+
+```{r}
+mtcars <- mtcars
+```
+
+If you want to use a language other than R, the data can be downloaded here: https://nationwidechildrens-my.sharepoint.com/:t:/g/personal/matthew_cannon_nationwidechildrens_org/EbYpZRiuizFOjd9nz4vKn38Br8z2hEKnRijltqbzsUgnow?e=pPnNxW
+
+6. Using the mtcars data, make a scatterplot of displacement (disp) vs mpg
+
+7. Using the mtcars data again, make a boxplot of hp separated by cyl
+
+8. Using the mtcars data again, make a barplot of displacement (disp) for each
+engine shape (column "vs")
+
+## Do a t-test
+
+9. What is the *p*-value for a *t*-test (using the mtcars data), that tests if
+displacement (disp) varies between engine shapes (column "vs")?
+
+## Basic unix commands
+
+10. Which command is used to create a new directory?
+
+11. Which command shows the size of a file?
+
+12. Which command lets you delete a file?
+
+13. Which command copies a file?
+
+14. Which command moves a file from one directory to another?
+
+## Basic stats knowledge
+
+15. Does a *t*-test assume that the measurements follow a normal distribution?
+
+16. Briefly (1-2 sentences), what is the difference between parametric and
+non-parametric tests?
+
+17. Name one method to perform multiple testing correction
+
+18. For a set of statistical tests, using a FDR cutoff of 0.1 will, in theory,
+result in what percentage of false positives in your "significant" tests?
+
+## Basic file/data formats
+
+19.  What file/data format is this?
+
+```{verbatim, max.height='100px'}
+>Sequence_1
+AGTACATGGGGAGCTGGCGCAATGACGACCTAATTGGCGCACAGTACTAGGCATCGTCATCCAATGCGACGAGTCCTAC
+ACTATCTTGGATATGATATGGCGCACTACACATGCTAGCCGCTGGGGAGATTAGCTCGAGTTGCCCCTTTGCCCGATCC
+CGGAAGATACGCTCTAAGCTCGGCAATCGCTCTTGCCGTGCGAGATGCTAGCAAAAAGGTGTACTTCTCAGCGGAGCAG
+AAAGATCATGTTTATTGGAAGCATCAACCTGCGCCGTCTTGTTAACTTGTCATATCGCGCACGTAGT
+>Sequence_2
+GCACTACACATGCTAGCCGCTGGGGAGATTAGCTCGAGTTGCCCCTTTGCCCGATCCCGGAAGATACGCTCTAAGCTCG
+GCAATCGCTCTTGCCGTGCGAGATGCTAGCAA
+```
+
+20. What file/data format is this?
+
+```{verbatim, max.height='100px'}
+@A00498:77:HGHFVDRXX:1:2101:3775:1016 1:N:0:NACGGCTC
+ANTTAGGCAACCGTGCTTATGGAAATGCA
++
+F#FFFFFFFFFFFFFFFFFFFFFFF:FF,
+@A00498:77:HGHFVDRXX:1:2101:3830:1016 1:N:0:NATCGCTC
+TNGCTGCAGAATAACCCGGGCTCAGACTC
++
+F#FFFFFFFF,FFFFFFFFFFFFFFFFF:
+```
+
+21. What file/data format is this?
+
+```{}
+chr1  213941196  213942363
+chr1  213942363  213943530
+chr1  213943530  213944697
+chr2  158364697  158365864
+chr2  158365864  158367031
+chr3  127477031  127478198
+```
+
+22. What are the two main differences between a bam and sam file?
+
+------------------------------------------------------------------------
+
+# Intermediate - 2 points per question
+
+## Make fancy plots
+
+23. Using the mtcars data, make a plot of mpg vs disp, coloring the points by
+cyl. Include a title. Be sure the colors used are color-blind friendly.
+
+24. From the previous plot, include a legend for point colors and make the
+title of the legend "Cylinder".
+
+25. Add a linear regression line to the plot along with text in the plot 
+providing the Pearson's correlation and the *p*-value
+
+## Align reads to a reference
+
+26. On the Franklin cluster, in the folder /gpfs0/scratch/mvc002/ are two files:
+
+  -   infoChallenge_R1.fastq.gz
+  -   infoChallenge_R2.fastq.gz
+  
+  Align these reads to the hg38 reference using your aligner of choice and share
+  your code.
+  Several pre-made references are available here:
+  `/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/`.
+
+27. Share a screenshot of some of the aligned reads in IGV
+
+28. Is this dataset whole genome sequencing, RNAseq, ChIPseq or amplicon seq?
+
+## --R-specific-- Demonstrate the use of pipes and tidyverse functions
+
+29. In R, starting with the mtcars dataset use `filter()` to remove any row
+where cyl is "8" and then use `group_by()` to group the data by gear and then
+use `summarize()` to calculate the average of the mpg column per group. This
+should be in one continuous pipeline without intermediate variables or nested
+functions. Use either pipe (`%>%` or `|>`).
+
+## Write a bash loop
+
+30. Write a "for loop" in bash to loop over the numbers 1-10 and print them to
+the console
+
+## Git and GitHub
+
+31. For your submission, put your results up into a public GitHub repository
+and provide the link
+
+32. Make sure your repo includes at least two branches and two commits
+
+------------------------------------------------------------------------
+
+# Hard - 3 points per question
+
+## Harder plotting
+
+33. Add histograms to the top and right side of the mtcars mpg vs disp
+scatterplot so that it looks like Figure 1. Note that the axes of each plot
+should align.
+
+![example plot]("C:\Users\mvc002\OneDrive - Nationwide Children's Hospital\Education\informatics_challenge\informatics_challenge_2022\exampleTriPlot.png")
+
+https://nationwidechildrens-my.sharepoint.com/:i:/g/personal/matthew_cannon_nationwidechildrens_org/Ef7xSrUpIoJMsl2ua-KezHkBArzTwEkqwMNjLnZ8vMaZFQ?e=9kLFHD 
+
+## Get sequences from SRA
+
+34. Using the command line, download the SRR10197556 dataset from the NCBI SRA
+repository
+
+## Bash variable expansion
+
+35. Create a variable in bash containing the text "path/to/target/file.txt" and
+then share code to trim off the path ("path/to/target/")
+
+36. Create a variable in bash containing the text "path/to/target/file.txt" and
+then share code to trim off the file extension (".txt")
+
+## Grep
+
+37. Use the Unix grep function to match the pattern "GATACA" in `/gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz` on the Franklin cluster. How
+many lines had a match?
+
+## Write a program
+
+38. Share code written in a language other than R or bash that reads in a fastq
+file and trims 10 characters from the 3' end of the read and quality score
+fields. You can use the `/gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz` file to
+test your code. 
+
+------------------------------------------------------------------------
+
+# Too hard - 4 points per question
+
+## Finding a sequence in a fasta file?
+
+39. How many times does sequence "GATTACA" appear in this fasta file? `/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/WholeGenomeFasta/genome.fa`
+
+## Using awk
+
+40. Use this gtf file (`/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Annotation/Genes/genes.gtf`)
+and the Unix `awk` command to keep only the lines where first column is "chr11"
+and the fourth column is greater than 100,000. How many lines are in the output?
+
+------------------------------------------------------------------------
+
+# I hate myself - 5 point per question
+
+## Identify the mystery data type
+
+41. On the Franklin cluster is a folder /gpfs0/scratch/mvc002/. Inside this
+folder are two files:
+  -   mysteryData_R1.fastq.gz
+  -   mysteryData_R2.fastq.gz
+  What kind of sequencing experiment are these data derived from?
+
+42. What species do these reads come from?
+
+## Harder programming
+
+43. Share code that finds a specified sequence in a fasta file, which also
+allows for ambiguous bases in the query
+(https://droog.gs.washington.edu/parc/images/iupac.html)
