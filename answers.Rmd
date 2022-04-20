@@ -324,7 +324,12 @@ cyl. Include a title. Be sure the colors used are color-blind friendly.
     a) Answer : 
 
         ```{r}
-        > WRONG plot(x=mtcars$disp, y=mtcars$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black","blue"), pch=c(17,16), cex=c(1.5,1.5))
+        > cyl4 <- mtcars[mtcars$cyl == 4,]
+        > cyl6 <- mtcars[mtcars$cyl == 6,]
+        > cyl8 <- mtcars[mtcars$cyl == 8,]
+        > plot(x=cyl4$disp, y=cyl4$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black"), pch=c(17), cex=c(1.5), xlim=c(0,max(mtcars$disp)), ylim=c(0, max(mtcars$mpg)))
+        > points(x=cyl6$disp, y=cyl6$mpg, col="blue", pch=18, cex=1.5)
+        > points(x=cyl8$disp, y=cyl8$mpg, col="red", pch=19, cex=1.5)
         ```
         ![](images/q23.png){width=50%}
 
@@ -335,9 +340,14 @@ cyl. Include a title. Be sure the colors used are color-blind friendly.
 title of the legend "Cylinder".
     a) Answer : 
 
-    ```{r}
-    > WRONG plot(x=mtcars$disp, y=mtcars$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black","blue"), pch=c(17,16), cex=c(1.5,1.5))
-    ```
+        ```{r}
+        # Adding code to above...
+        > lab4 <- sprintf("4 cylinder")
+        > lab6 <- sprintf("6 cylinder")
+        > lab8 <- sprintf("8 cylinder")
+        > legend("topright", c(lab4, lab6, lab8), pch=c(17,18,19), col=c("black","blue","red"),title="Cylinder")
+        ```
+        ![](images/q24.png){width=50%}
 
     $$\\[0.5in]$$
 
@@ -345,10 +355,35 @@ title of the legend "Cylinder".
 25. Add a linear regression line to the plot along with text in the plot 
 providing the Pearson's correlation and the *p*-value
     a) Answer : 
-    ```{r}
-    ```
+        ```{r}
+        > cyl4 <- mtcars[mtcars$cyl == 4,]
+        > cyl6 <- mtcars[mtcars$cyl == 6,]
+        > cyl8 <- mtcars[mtcars$cyl == 8,]
+        > plot(x=cyl4$disp, y=cyl4$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black"), pch=c(17), cex=c(1.5), xlim=c(0,max(mtcars$disp)), ylim=c(0, max(mtcars$mpg)))
+        > points(x=cyl6$disp, y=cyl6$mpg, col="blue", pch=18, cex=1.5)
+        > points(x=cyl8$disp, y=cyl8$mpg, col="red", pch=19, cex=1.5)
+        > lab4 <- sprintf("4 cylinder")
+        > lab6 <- sprintf("6 cylinder")
+        > lab8 <- sprintf("8 cylinder")
+        > 
+        > mtfit <- lm(mpg ~ disp, mtcars)
+        > df <- data.frame(mtcars$disp)
+        > colnames(df)<-c("disp")
+        > lines(df$disp, predict(mtfit,df), col="black", lty=1, lwd=3)
+        > pearcor <- cor(data.frame(mtcars$disp,mtcars$mpg),method="pearson")[2,1]
+        > pvalue <- t.test(df$disp,df$mpg)$p.value      # Wouldn't make sense any other way
+        > labfit <- sprintf("fit : Pearson Corr = %.4f\n pvalue=%.3e",pearcor, pvalue)
+        > legend("topright", c(lab4, lab6, lab8, labfit), pch=c(17,18,19,NA), lty=c(NA,NA,NA,1), lwd=c(NA,NA,NA,3), col=c("black","blue","red"),title="Cylinder", cex=c(0.9,0.9,0.9,0.9))
+        ```
 
-    $$\\[0.5in]$$
+        ![](images/q25.png){width=50%}
+
+        <!--
+        > ASIDE : t.test(df) is the same a t.test(c(df$disp,df$mpg)), it assumes that
+          the alt. hyp is where the mean is 0.
+        -->
+
+        $$\\[0.5in]$$
 
 
 ## Align reads to a reference
@@ -363,7 +398,10 @@ providing the Pearson's correlation and the *p*-value
   Several pre-made references are available here:
   `/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/`.
     a) Answer : 
-    ```{r}
+    ```{bash}
+    $ ml load GCC/9.3.0 Bowtie2/2.4.1
+    # TRim
+    $ sbatch --wrap="bowtie2 --fr --threads=32 -x /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/Bowtie2Index/genome -1 /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz -2 /gpfs0/scratch/mvc002/infoChallenge_2.fastq.gz -S data/infoChallenge.sam"
     ```
 
     $$\\[0.5in]$$

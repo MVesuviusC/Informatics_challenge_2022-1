@@ -111,15 +111,62 @@ printf("Using the mtcars data, make a plot of mpg vs disp, coloring the points b
 printf("   ANSWER :")
 printf("        p-value = %e", t.test(disp ~ vs, mtcars)[[3]])
 #png("images/q23.png")
-#plot(x=mtcars$disp, y=mtcars$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black","blue"), pch=c(17,16), cex=c(1.5,1.5))
+cyl4 <- mtcars[mtcars$cyl == 4,]
+cyl6 <- mtcars[mtcars$cyl == 6,]
+cyl8 <- mtcars[mtcars$cyl == 8,]
+plot(x=cyl4$disp, y=cyl4$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black"), pch=c(17), cex=c(1.5), xlim=c(0,max(mtcars$disp)), ylim=c(0, max(mtcars$mpg)))
+points(x=cyl6$disp, y=cyl6$mpg, col="blue", pch=18, cex=1.5)
+points(x=cyl8$disp, y=cyl8$mpg, col="red", pch=19, cex=1.5)
 #dev.off()
 printf("")
 printf("")
 
 
 ####################
-# Question 3 : 
-printf("Add a new column of some sort to the data frame you made in question 3 and assign the output a new variable")
+# Question 24 : 
+printf("From the previous plot, include a legend for point colors and make the
+title of the legend 'Cylinder'.")
 printf("   ANSWER :")
+#png("images/q24.png")
+cyl4 <- mtcars[mtcars$cyl == 4,]
+cyl6 <- mtcars[mtcars$cyl == 6,]
+cyl8 <- mtcars[mtcars$cyl == 8,]
+plot(x=cyl4$disp, y=cyl4$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black"), pch=c(17), cex=c(1.5), xlim=c(0,max(mtcars$disp)), ylim=c(0, max(mtcars$mpg)))
+points(x=cyl6$disp, y=cyl6$mpg, col="blue", pch=18, cex=1.5)
+points(x=cyl8$disp, y=cyl8$mpg, col="red", pch=19, cex=1.5)
+lab4 <- sprintf("4 cylinder")
+lab6 <- sprintf("6 cylinder")
+lab8 <- sprintf("8 cylinder")
+legend("topright", c(lab4, lab6, lab8), pch=c(17,18,19), col=c("black","blue","red"),title="Cylinder")
+#dev.off()
+printf("")
+printf("")
+
+
+
+####################
+# Question 25 : 
+printf("Add a linear regression line to the plot along with text in the plot providing the Pearson's correlation and the *p*-value")
+printf("   ANSWER :")
+#png("images/q25.png")
+cyl4 <- mtcars[mtcars$cyl == 4,]
+cyl6 <- mtcars[mtcars$cyl == 6,]
+cyl8 <- mtcars[mtcars$cyl == 8,]
+plot(x=cyl4$disp, y=cyl4$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black"), pch=c(17), cex=c(1.5), xlim=c(0,max(mtcars$disp)), ylim=c(0, max(mtcars$mpg)))
+points(x=cyl6$disp, y=cyl6$mpg, col="blue", pch=18, cex=1.5)
+points(x=cyl8$disp, y=cyl8$mpg, col="red", pch=19, cex=1.5)
+lab4 <- sprintf("4 cylinder")
+lab6 <- sprintf("6 cylinder")
+lab8 <- sprintf("8 cylinder")
+
+mtfit <- lm(mpg ~ disp, mtcars)
+df <- data.frame(mtcars$disp)
+colnames(df)<-c("disp")
+lines(df$disp, predict(mtfit,df), col="black", lty=1, lwd=3)
+pearcor <- cor(data.frame(mtcars$disp,mtcars$mpg),method="pearson")[2,1]
+pvalue <- t.test(df$disp,df$mpg)$p.value      # Wouldn't make sense any other way
+labfit <- sprintf("fit : Pearson Corr = %.4f\n pvalue=%.3e",pearcor, pvalue)
+legend("topright", c(lab4, lab6, lab8, labfit), pch=c(17,18,19,NA), lty=c(NA,NA,NA,1), lwd=c(NA,NA,NA,3), col=c("black","blue","red"),title="Cylinder", cex=c(0.9,0.9,0.9,0.9))
+#dev.off()
 printf("")
 printf("")
