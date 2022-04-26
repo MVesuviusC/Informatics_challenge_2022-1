@@ -75,7 +75,7 @@ def main():
 
     for line in fin:
         # Read by read
-        line = line.decode("utf-8")
+        line = line.decode("utf-8").strip()
         if(line[0] == "@"):
             header = line
             data   = fin.readline().decode("utf-8") # Probably shouldn't use hidden func.

@@ -398,27 +398,34 @@ providing the Pearson's correlation and the *p*-value
   Several pre-made references are available here:
   `/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/`.
     a) Answer : 
-    ```{bash}
-    $ ml load GCC/9.3.0 Bowtie2/2.4.1
-    # Trim - no bonus points so I won't do it
-    $ sbatch --wrap="bowtie2 --fr --threads=32 -x /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/Bowtie2Index/genome -1 /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz -2 /gpfs0/scratch/mvc002/infoChallenge_2.fastq.gz -S data/infoChallenge.sam"
-    ```
+        ```{bash}
+        $ ml load GCC/9.3.0 Bowtie2/2.4.1
+        # Trim - no bonus points so I won't do it
+        $ sbatch --wrap="bowtie2 --fr --threads=32 -x /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/Bowtie2Index/genome -1 /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz -2 /gpfs0/scratch/mvc002/infoChallenge_2.fastq.gz -S data/infoChallenge.sam"
+        ```
 
     $$\\[0.5in]$$
 
 
 27. Share a screenshot of some of the aligned reads in IGV
     a) Answer : 
-    ```{r}
-    ```
+        ```{bash}
+        $ ml load SAMtools/1.15
+        $ sbatch --time=2-0 --cpus-per-task=32 --wrap="samtools sort --threads 32 -o data/infoChallenge_sort.sam data/infoChallenge.sam"
+        $ ml load IGV/2.8.0-Java-11.0.2
+        $ sbatch --time=2-0 --wrap="igvtools index data/infoChallenge_sort.sam"
+        ```
+
+        ![](images/IGV-view.png){width=50%}
 
     $$\\[0.5in]$$
 
 
 28. Is this dataset whole genome sequencing, RNAseq, ChIPseq or amplicon seq?
-    a) Answer : 
-    ```{r}
-    ```
+    a) Answer : Based the mapping to BRD7 on Chr16, there is lots of expression
+       not associated with exons and amplicon sequencing is more
+       specific region (and this covered the whole genome), this dataset must be
+       from ChIPseq.
 
     $$\\[0.5in]$$
 
@@ -558,8 +565,10 @@ repository
 35. Create a variable in bash containing the text "path/to/target/file.txt" and
 then share code to trim off the path ("path/to/target/")
     a) Answer : 
-    ```{r}
-    ```
+        ```{bash}
+        $ VAR=path/to/target/file.txt
+        $ echo $VAR | rev | cut -d"/" -f1 | rev
+        ```
 
     $$\\[0.5in]$$
 
@@ -567,8 +576,10 @@ then share code to trim off the path ("path/to/target/")
 36. Create a variable in bash containing the text "path/to/target/file.txt" and
 then share code to trim off the file extension (".txt")
     a) Answer : 
-    ```{r}
-    ```
+        ```{bash}
+        $ VAR=path/to/target/file.txt
+        $ echo $VAR | cut -d"." -f1
+        ```
 
     $$\\[0.5in]$$
 
@@ -578,8 +589,10 @@ then share code to trim off the file extension (".txt")
 37. Use the Unix grep function to match the pattern "GATACA" in `/gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz` on the Franklin cluster. How
 many lines had a match?
     a) Answer : 
-    ```{r}
-    ```
+        ```{bash}
+        $ gunzip -c /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz | grep -c GATACA
+        472703
+        ```
 
     $$\\[0.5in]$$
 
@@ -591,8 +604,10 @@ file and trims 10 characters from the 3' end of the read and quality score
 fields. You can use the `/gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz` file to
 test your code. 
     a) Answer : 
-    ```{r}
-    ```
+        ```{bash}
+        # See q38.py
+        $ python3 -m pdb q38.py /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz  trim.fastq
+        ```
 
     $$\\[0.5in]$$
 
