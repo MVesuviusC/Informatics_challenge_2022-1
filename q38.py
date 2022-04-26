@@ -53,6 +53,8 @@ def main():
     DESCRIPTION:
     DEBUG:
     FUTURE:
+        1. Make less ugly by not repeating code for either compressed vs. not
+           compressed
     """
     ## Prevent rogue command injection ##
     if(len(sys.argv) != 2 and len(sys.argv) != 3):
@@ -71,24 +73,46 @@ def main():
                         "expected\n".format(sys.version_info[0]), emailAddressL)
     ## Read CL args
     fout= open(outpath, "w+")
-    fin = gzip.open(path, "r")
+    # Compressed file 
+    if(".gz" in path[-3:]):
+        fin = gzip.open(path, "r")
+        for line in fin:
+            # Read by read
+            line = line.decode("utf-8").strip()
+            if(line[0] == "@"):
+                header = line
+                data   = fin.readline().decode("utf-8") 
+                data = data[:-11]   # strip last 10 incl \n
+                # skip intermediate 
+                interm = fin.readline().decode("utf-8").strip()
+                # qc
+                qc = fin.readline().decode("utf-8")
+                qc = qc[:-11]       # strip last 10 incl \n
+                # Write output
+                fout.write("{}\n{}\n{}\n{}\n".format(header,data,interm,qc))
+            else:
+                exit_with_error("ERROR!!! Only read headers should be read here")
 
-    for line in fin:
-        # Read by read
-        line = line.decode("utf-8").strip()
-        if(line[0] == "@"):
-            header = line
-            data   = fin.readline().decode("utf-8") # Probably shouldn't use hidden func.
-            data = data[:-11]   # strip last 10 incl \n
-            # skip intermediate 
-            interm = fin.readline().decode("utf-8").strip()
-            # qc
-            qc = fin.readline().decode("utf-8")
-            qc = qc[:-11]       # strip last 10 incl \n
-            # Write output
-            fout.write("{}\n{}\n{}\n{}\n".format(header,data,interm,qc))
-        else:
-            exit_with_error("ERROR!!! Only read headers should be read here")
+    # NOT Compressed file 
+    else:
+        fin = open(path, "r")
+        for line in fin:
+            # Read by read
+            if(line[0] == "@"):
+                header = line.strip()
+                data   = fin.readline()
+                data = data[:-11]   # strip last 10 incl \n
+                # skip intermediate 
+                interm = fin.readline().strip()
+                # qc
+                qc = fin.readline()
+                qc = qc[:-11]       # strip last 10 incl \n
+                # Write output
+                fout.write("{}\n{}\n{}\n{}\n".format(header,data,interm,qc))
+            else:
+                exit_with_error("ERROR!!! Only read headers should be read here")
+
+
 
     fout.close()
     fin.close()
