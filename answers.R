@@ -170,3 +170,21 @@ legend("topright", c(lab4, lab6, lab8, labfit), pch=c(17,18,19,NA), lty=c(NA,NA,
 #dev.off()
 printf("")
 printf("")
+
+
+####################
+# Question 29 : 
+printf("In R, starting with the mtcars dataset use `filter()` to remove any row where cyl is "8" and then use `group_by()` to group the data by gear and then use `summarize()` to calculate the average of the mpg column per group. This should be in one continuous pipeline without intermediate variables or nested functions. Use either pipe (`%>%` or `|>`).")
+printf("   ANSWER :")
+library(dplyr)
+mtcars %>% dplyr::filter(cyl != 8) %>% group_by(gear) %>% summarize(mean=mean(mpg))
+printf("")
+printf("")
+
+
+
+####################
+# Question 33 : 
+# See q33.R
+
+

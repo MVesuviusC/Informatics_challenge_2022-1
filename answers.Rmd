@@ -400,7 +400,7 @@ providing the Pearson's correlation and the *p*-value
     a) Answer : 
     ```{bash}
     $ ml load GCC/9.3.0 Bowtie2/2.4.1
-    # TRim
+    # Trim - no bonus points so I won't do it
     $ sbatch --wrap="bowtie2 --fr --threads=32 -x /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/Bowtie2Index/genome -1 /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz -2 /gpfs0/scratch/mvc002/infoChallenge_2.fastq.gz -S data/infoChallenge.sam"
     ```
 
@@ -431,8 +431,10 @@ use `summarize()` to calculate the average of the mpg column per group. This
 should be in one continuous pipeline without intermediate variables or nested
 functions. Use either pipe (`%>%` or `|>`).
     a) Answer : 
-    ```{r}
-    ```
+        ```{r}
+        > library(dplyr)
+        > mtcars %>% dplyr::filter(cyl != 8) %>% group_by(gear) %>% summarize(mean=mean(mpg))
+        ```
 
     $$\\[0.5in]$$
 
@@ -442,8 +444,9 @@ functions. Use either pipe (`%>%` or `|>`).
 30. Write a "for loop" in bash to loop over the numbers 1-10 and print them to
 the console
     a) Answer : 
-    ```{r}
-    ```
+        ```{bash}
+        for((i=1; i<=10; i++)); do echo $i; done
+        ```
 
     $$\\[0.5in]$$
 
@@ -453,16 +456,55 @@ the console
 31. For your submission, put your results up into a public GitHub repository
 and provide the link
     a) Answer : 
-    ```{r}
-    ```
+        ```{r}
+        https://github.com/astrophys/Informatics_challenge_2022
+        ```
 
     $$\\[0.5in]$$
 
 
 32. Make sure your repo includes at least two branches and two commits
     a) Answer : 
-    ```{r}
-    ```
+        ```{bash}
+        $ git checkout -b dev
+        Switched to a new branch 'dev'
+        log01: informatics_challenge_2022$ git branch
+        * dev
+          master
+        log01: informatics_challenge_2022$ git log
+        commit 1bb4fcaa7fe794a6f596faa090758c743d1a90c5 (HEAD -> dev, origin/master, master)
+        Author: Ali Snedden <ali.snedden at nationwidechildrens.org>
+        Date:   Wed Apr 20 15:31:18 2022 -0400
+        
+            Committed my answers from today
+        
+        commit f09ea9ad3d2b2b9b77b653ea4adeb8ff5c861b58
+        Author: Ali Snedden <ali.snedden at nationwidechildrens.org>
+        Date:   Tue Apr 19 15:43:12 2022 -0400
+        
+            answers.R, answers.Rmd :
+            1. Answered up to question 22. Question 23 and 24 need fixed
+        
+        commit 753230aab633d8a39dfb0f5b434c71fe0b79a8a4
+        Author: Ali Snedden <ali.snedden at nationwidechildrens.org>
+        Date:   Tue Apr 19 13:35:16 2022 -0400
+        
+            answers.R, answers.Rmd :
+            1. Got solutions upto and including question 8.
+        
+        commit a890d175e3fa8f633dfc7ebb4c9209dd1f10642c
+        Author: Ali Snedden <ali.snedden at nationwidechildrens.org>
+        Date:   Tue Apr 19 10:53:25 2022 -0400
+        
+            answers.R, answers.Rmd :
+            1. Committed first attempts at answers
+        
+        commit 87d1b3055877918bb0127881d7109ba433f426dd
+        Author: Ali Snedden <ali.snedden at nationwidechildrens.org>
+        Date:   Tue Apr 19 09:05:27 2022 -0400
+        
+            Initial commit, before answers
+        ```
 
     $$\\[0.5in]$$
 
@@ -476,16 +518,29 @@ and provide the link
 33. Add histograms to the top and right side of the mtcars mpg vs disp
 scatterplot so that it looks like Figure 1. Note that the axes of each plot
 should align.
-
-![example plot]("C:\Users\mvc002\OneDrive - Nationwide Children's Hospital\Education\informatics_challenge\informatics_challenge_2022\exampleTriPlot.png")
-
-https://nationwidechildrens-my.sharepoint.com/:i:/g/personal/matthew_cannon_nationwidechildrens_org/Ef7xSrUpIoJMsl2ua-KezHkBArzTwEkqwMNjLnZ8vMaZFQ?e=9kLFHD 
-
     a) Answer : 
-    ```{r}
-    ```
+
+        ```{r}
+        par(mar=c(1,1,1,1))
+        # Central scatter plot
+        par(fig=c(0.1,0.7,0.1,0.7))
+        plot(mtcars$mpg, mtcars$disp, pch=c(16), xlim=c(10,37), ylim=c(30,520))
+        # Right histogram
+        par(fig=c(0.72,0.95,0.1,0.7), new=TRUE)
+        tmp<-hist(mtcars$disp, breaks=seq(30,520,1), plot=FALSE)
+        barplot(tmp$counts, axes=FALSE, space=0, horiz=TRUE, ylim=c(30,520))
+        Axis(side=2, labels=TRUE, at=c(100,200,300,400,500))
+        axis(side=1, tick=TRUE, at=c(1,2,3), labels=FALSE)
+        box(col="black")
+        # Top histogram
+        par(fig=c(0.1,0.7,0.71,0.9), new=TRUE)
+        hist(mtcars$mpg, main="", xlim=c(10,37), breaks=150)
+        box(col="black")
+        ```
+        ![](images/q33.png){width=50%}
 
     $$\\[0.5in]$$
+
 
 ## Get sequences from SRA
 
