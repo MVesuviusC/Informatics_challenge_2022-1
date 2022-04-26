@@ -1,0 +1,3 @@
+1. Consider adding this to ensure i'm correctly getting correlation :
+   https://en.wikipedia.org/wiki/Covariance_and_correlation
+2. Finish 27, 28, 31
