@@ -2,3 +2,5 @@
 .*.swp
 images
 data
+*.out
+*.fastq
