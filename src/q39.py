@@ -13,6 +13,7 @@
 #
 import sys
 import gzip
+import re
 
 
 def exit_with_error(String):
@@ -62,7 +63,7 @@ def main():
     elif("-h" in sys.argv[1]):
         print_help(0)
     else:
-        string = sys.argv[1]
+        string = sys.argv[1].lower()
         path   = sys.argv[2]
 
 
@@ -76,15 +77,14 @@ def main():
     bigStr = ""
     for line in fin:
         # Read by read
-        bigStr += line.strip()
-
-
-
+        if(">" == line[0]):
+            print(line)
+            continue
+        bigStr += line.lower().strip()
     fin.close()
+    print("{} matches {} times in a {} length string".format(string, len(re.findall(string, bigStr)), len(bigStr)))
 
 
-
-    print("The End")
 
 
 

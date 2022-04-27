@@ -619,9 +619,7 @@ test your code.
 ## Finding a sequence in a fasta file?
 
 39. How many times does sequence "GATTACA" appear in this fasta file? `/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/WholeGenomeFasta/genome.fa`
-    a) Answer : 
-    ```{r}
-    ```
+    a) Answer : 694879 times
 
     $$\\[0.5in]$$
 
