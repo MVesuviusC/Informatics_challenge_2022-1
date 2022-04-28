@@ -6,3 +6,5 @@ data
 *.fastq
 *.fa
 nr.*
+mystery-R1.diamond
+out-q43.txt
