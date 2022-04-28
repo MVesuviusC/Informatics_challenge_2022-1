@@ -255,17 +255,16 @@ result in what percentage of false positives in your "significant" tests?
 ## Basic file/data formats
 
 19.  What file/data format is this?
-
-```{verbatim, max.height='100px'}
->Sequence_1
-AGTACATGGGGAGCTGGCGCAATGACGACCTAATTGGCGCACAGTACTAGGCATCGTCATCCAATGCGACGAGTCCTAC
-ACTATCTTGGATATGATATGGCGCACTACACATGCTAGCCGCTGGGGAGATTAGCTCGAGTTGCCCCTTTGCCCGATCC
-CGGAAGATACGCTCTAAGCTCGGCAATCGCTCTTGCCGTGCGAGATGCTAGCAAAAAGGTGTACTTCTCAGCGGAGCAG
-AAAGATCATGTTTATTGGAAGCATCAACCTGCGCCGTCTTGTTAACTTGTCATATCGCGCACGTAGT
->Sequence_2
-GCACTACACATGCTAGCCGCTGGGGAGATTAGCTCGAGTTGCCCCTTTGCCCGATCCCGGAAGATACGCTCTAAGCTCG
-GCAATCGCTCTTGCCGTGCGAGATGCTAGCAA
-```
+    ```{verbatim, max.height='100px'}
+    >Sequence_1
+    AGTACATGGGGAGCTGGCGCAATGACGACCTAATTGGCGCACAGTACTAGGCATCGTCATCCAATGCGACGAGTCCTAC
+    ACTATCTTGGATATGATATGGCGCACTACACATGCTAGCCGCTGGGGAGATTAGCTCGAGTTGCCCCTTTGCCCGATCC
+    CGGAAGATACGCTCTAAGCTCGGCAATCGCTCTTGCCGTGCGAGATGCTAGCAAAAAGGTGTACTTCTCAGCGGAGCAG
+    AAAGATCATGTTTATTGGAAGCATCAACCTGCGCCGTCTTGTTAACTTGTCATATCGCGCACGTAGT
+    >Sequence_2
+    GCACTACACATGCTAGCCGCTGGGGAGATTAGCTCGAGTTGCCCCTTTGCCCGATCCCGGAAGATACGCTCTAAGCTCG
+    GCAATCGCTCTTGCCGTGCGAGATGCTAGCAA
+    ```
     a) Answer : 
         fasta
     
@@ -274,16 +273,16 @@ GCAATCGCTCTTGCCGTGCGAGATGCTAGCAA
     
 20. What file/data format is this?
 
-```{verbatim, max.height='100px'}
-@A00498:77:HGHFVDRXX:1:2101:3775:1016 1:N:0:NACGGCTC
-ANTTAGGCAACCGTGCTTATGGAAATGCA
-+
-F#FFFFFFFFFFFFFFFFFFFFFFF:FF,
-@A00498:77:HGHFVDRXX:1:2101:3830:1016 1:N:0:NATCGCTC
-TNGCTGCAGAATAACCCGGGCTCAGACTC
-+
-F#FFFFFFFF,FFFFFFFFFFFFFFFFF:
-```
+    ```{verbatim, max.height='100px'}
+    @A00498:77:HGHFVDRXX:1:2101:3775:1016 1:N:0:NACGGCTC
+    ANTTAGGCAACCGTGCTTATGGAAATGCA
+    +
+    F#FFFFFFFFFFFFFFFFFFFFFFF:FF,
+    @A00498:77:HGHFVDRXX:1:2101:3830:1016 1:N:0:NATCGCTC
+    TNGCTGCAGAATAACCCGGGCTCAGACTC
+    +
+    F#FFFFFFFF,FFFFFFFFFFFFFFFFF:
+    ```
     a) Answer : 
         fastq
     
@@ -292,14 +291,14 @@ F#FFFFFFFF,FFFFFFFFFFFFFFFFF:
     
 21. What file/data format is this?
 
-```{}
-chr1  213941196  213942363
-chr1  213942363  213943530
-chr1  213943530  213944697
-chr2  158364697  158365864
-chr2  158365864  158367031
-chr3  127477031  127478198
-```
+    ```{}
+    chr1  213941196  213942363
+    chr1  213942363  213943530
+    chr1  213943530  213944697
+    chr2  158364697  158365864
+    chr2  158365864  158367031
+    chr3  127477031  127478198
+    ```
     a) Answer : 
         A file showing the lengths of the chromosomes about the centromere (REVISIT).
     
@@ -355,6 +354,7 @@ title of the legend "Cylinder".
 25. Add a linear regression line to the plot along with text in the plot 
 providing the Pearson's correlation and the *p*-value
     a) Answer : 
+
         ```{r}
         > cyl4 <- mtcars[mtcars$cyl == 4,]
         > cyl6 <- mtcars[mtcars$cyl == 6,]
@@ -388,16 +388,13 @@ providing the Pearson's correlation and the *p*-value
 
 ## Align reads to a reference
 
-26. On the Franklin cluster, in the folder /gpfs0/scratch/mvc002/ are two files:
-
-  -   infoChallenge_R1.fastq.gz
-  -   infoChallenge_R2.fastq.gz
-  
+26. On the Franklin cluster, in the folder /gpfs0/scratch/mvc002/ are two files, infoChallenge_R1.fastq.gz, infoChallenge_R2.fastq.gz.
   Align these reads to the hg38 reference using your aligner of choice and share
   your code.
   Several pre-made references are available here:
   `/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/`.
     a) Answer : 
+
         ```{bash}
         $ ml load GCC/9.3.0 Bowtie2/2.4.1
         # Trim - no bonus points so I won't do it
@@ -409,6 +406,7 @@ providing the Pearson's correlation and the *p*-value
 
 27. Share a screenshot of some of the aligned reads in IGV
     a) Answer : 
+
         ```{bash}
         $ ml load SAMtools/1.15
         $ sbatch --time=2-0 --cpus-per-task=32 --wrap="samtools sort --threads 32 -o data/infoChallenge_sort.sam data/infoChallenge.sam"
@@ -439,6 +437,7 @@ use `summarize()` to calculate the average of the mpg column per group. This
 should be in one continuous pipeline without intermediate variables or nested
 functions. Use either pipe (`%>%` or `|>`).
     a) Answer : 
+
         ```{r}
         > library(dplyr)
         > mtcars %>% dplyr::filter(cyl != 8) %>% group_by(gear) %>% summarize(mean=mean(mpg))
@@ -452,8 +451,9 @@ functions. Use either pipe (`%>%` or `|>`).
 30. Write a "for loop" in bash to loop over the numbers 1-10 and print them to
 the console
     a) Answer : 
+
         ```{bash}
-        for((i=1; i<=10; i++)); do echo $i; done
+        $ for((i=1; i<=10; i++)); do echo $i; done
         ```
 
     $$\\[0.5in]$$
@@ -464,6 +464,7 @@ the console
 31. For your submission, put your results up into a public GitHub repository
 and provide the link
     a) Answer : 
+
         ```{r}
         https://github.com/astrophys/Informatics_challenge_2022
         ```
@@ -473,6 +474,7 @@ and provide the link
 
 32. Make sure your repo includes at least two branches and two commits
     a) Answer : 
+
         ```{bash}
         $ git checkout -b dev
         Switched to a new branch 'dev'
@@ -526,7 +528,7 @@ and provide the link
 33. Add histograms to the top and right side of the mtcars mpg vs disp
 scatterplot so that it looks like Figure 1. Note that the axes of each plot
 should align.
-    a) Answer : 
+    a) Answer (see src/q33.R): 
 
         ```{r}
         par(mar=c(1,1,1,1))
@@ -555,8 +557,11 @@ should align.
 34. Using the command line, download the SRR10197556 dataset from the NCBI SRA
 repository
     a) Answer : 
-    ```{r}
-    ```
+
+        ```{bash}
+        $ ml load GCC/8.3.0  OpenMPI/3.1.4 SRA-Toolkit/2.10.4
+        $ prefetch SRR10197556
+        ```
 
     $$\\[0.5in]$$
 
@@ -566,6 +571,7 @@ repository
 35. Create a variable in bash containing the text "path/to/target/file.txt" and
 then share code to trim off the path ("path/to/target/")
     a) Answer : 
+
         ```{bash}
         $ VAR=path/to/target/file.txt
         $ echo $VAR | rev | cut -d"/" -f1 | rev
@@ -577,6 +583,7 @@ then share code to trim off the path ("path/to/target/")
 36. Create a variable in bash containing the text "path/to/target/file.txt" and
 then share code to trim off the file extension (".txt")
     a) Answer : 
+
         ```{bash}
         $ VAR=path/to/target/file.txt
         $ echo $VAR | cut -d"." -f1
@@ -590,6 +597,7 @@ then share code to trim off the file extension (".txt")
 37. Use the Unix grep function to match the pattern "GATACA" in `/gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz` on the Franklin cluster. How
 many lines had a match?
     a) Answer : 
+
         ```{bash}
         $ gunzip -c /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz | grep -c GATACA
         472703
@@ -605,6 +613,7 @@ file and trims 10 characters from the 3' end of the read and quality score
 fields. You can use the `/gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz` file to
 test your code. 
     a) Answer : 
+
         ```{bash}
         # See q38.py
         $ python3 -m pdb q38.py /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz  trim.fastq
@@ -621,6 +630,7 @@ test your code.
 
 39. How many times does sequence "GATTACA" appear in this fasta file? `/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/WholeGenomeFasta/genome.fa`
     a) Answer : 694879 times 
+
         ```{bash}
         # See q39.py
         $ python3 src/q39.py GATTACA /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/WholeGenomeFasta/genome.fa
@@ -635,6 +645,7 @@ test your code.
 and the Unix `awk` command to keep only the lines where first column is "chr11"
 and the fourth column is greater than 100,000. How many lines are in the output?
     a) Answer : 54789
+
         ```{bash}
         $ awk '{if($1 == "chr11" && $4 > 100000){print $0}}' /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Annotation/Genes/genes.gtf  | wc -l
         ```
@@ -649,11 +660,10 @@ and the fourth column is greater than 100,000. How many lines are in the output?
 ## Identify the mystery data type
 
 41. On the Franklin cluster is a folder /gpfs0/scratch/mvc002/. Inside this
-folder are two files:
-  -   mysteryData_R1.fastq.gz
-  -   mysteryData_R2.fastq.gz
+folder are two files, mysteryData_R1.fastq.gz, mysteryData_R2.fastq.gz : 
   What kind of sequencing experiment are these data derived from?
     a) Answer : RNASeq (determined by adapter content reported from FastQC). From the source code of fastqc, the Illumina Universal Adapter is AGATCGGAAGAG.
+
         ```{bash}
         $ ml load FastQC/0.11.9-Java-11.0.2
         $ fastqc -o data/mystery-R2 /gpfs0/scratch/mvc002/mysteryData_R2.fastq.gz
@@ -664,18 +674,13 @@ folder are two files:
 
 
 42. What species do these reads come from?
-    a) Answer : Olsenella massiliensis     Corynebacterium provencense  Staphylococcus haemolyticus
+    a) Answer : Olsenella massiliensis
+
         ```{bash}
-        $ ml load GCC/10.3.0  OpenMPI/4.1.1 BLAST+/2.11.0
-        $ gunzip -c /gpfs0/scratch/mvc002/mysteryData_R1.fastq.gz | awk '{if(NR % 2 == 0 && NR % 4 != 0){print $0}}' > mystery-R1.fa
-        $ gunzip -c /gpfs0/scratch/mvc002/mysteryData_R2.fastq.gz | awk '{if(NR % 2 == 0 && NR % 4 != 0){print $0}}' > mystery-R2.fa
-        $ sbatch --cpus-per-task=32 --time=1-0 --wrap="blastx -num_threads 32 -db /reference/blast_database/blast/db/nr/02feb2022/nr -query mystery-R1.fa"
-        $ sbatch --cpus-per-task=32 --time=1-0 --wrap="blastx -num_threads 32 -db /reference/blast_database/blast/db/nr/02feb2022/nr -query mystery-R2.fa"
-
-
         $ gunzip -c /gpfs0/scratch/mvc002/mysteryData_R1.fastq.gz | grep "^@" -A 1 | grep -v "\-\-" > mystery-R1.fa
-        $ # Cleaned up header in vim, %s/ length=150//g, %s/ [0-9]\{1,10\}//gc
-
+        # Cleaned up header in vim, %s/ length=150//g, %s/ [0-9]\{1,10\}//gc
+        $ sbatch --cpus-per-task=32 --time=0-12 --wrap="diamond makedb --in /reference/diamond_database/nr/27aug17/nr.faa -d nr --threads 32"
+        $ sbatch --time=0-12 --cpus-per-task=32 --wrap="diamond blastx --threads 32 --db nr --query mystery-R1.fa --max-target-seqs 5 --out mystery-R1.diamond"
         ```
 
 
@@ -691,8 +696,9 @@ folder are two files:
 allows for ambiguous bases in the query
 (https://droog.gs.washington.edu/parc/images/iupac.html)
     a) Answer : 
+
         ```{bash}
-        $ python3 src/q43.py MGS test2.fa       # See out-q43.txt
+        $ python3 src/q43.py string some.fasta      # See out-q43.txt
         ```
 
     $$\\[0.5in]$$

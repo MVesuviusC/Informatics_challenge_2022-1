@@ -1,4 +1,4 @@
-dev.off()
+#dev.off()
 #png("q33.png")
 par(mar=c(1,1,1,1))
 # Central scatter plot
