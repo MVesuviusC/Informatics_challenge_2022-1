@@ -6,8 +6,6 @@
 #  
 #           
 # Debug   : 
-#   Can compare by testing against 
-#    gunzip -c /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz | awk '{if(NR % 2 == 0){print substr($0, 1, length($0)-10)}else{print $0}}' > trimmed.fastq
 #
 # To Do   : 
 #

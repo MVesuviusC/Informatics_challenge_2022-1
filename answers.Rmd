@@ -401,7 +401,7 @@ providing the Pearson's correlation and the *p*-value
         ```{bash}
         $ ml load GCC/9.3.0 Bowtie2/2.4.1
         # Trim - no bonus points so I won't do it
-        $ sbatch --wrap="bowtie2 --fr --threads=32 -x /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/Bowtie2Index/genome -1 /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz -2 /gpfs0/scratch/mvc002/infoChallenge_2.fastq.gz -S data/infoChallenge.sam"
+        $ sbatch --cpus-per-task=32 --wrap="bowtie2 --fr --threads=32 -x /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/Bowtie2Index/genome -1 /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz -2 /gpfs0/scratch/mvc002/infoChallenge_2.fastq.gz -S data/infoChallenge.sam"
         ```
 
     $$\\[0.5in]$$
@@ -422,10 +422,11 @@ providing the Pearson's correlation and the *p*-value
 
 
 28. Is this dataset whole genome sequencing, RNAseq, ChIPseq or amplicon seq?
-    a) Answer : Based the mapping to BRD7 on Chr16, there is lots of expression
-       not associated with exons and amplicon sequencing is more
+    a) Answer : It is ChIPseq.  Based the mapping to BRD7 on Chr16, there is lots
+       of expression not associated with exons and amplicon sequencing is more
        specific region (and this covered the whole genome), this dataset must be
-       from ChIPseq.
+       from ChIPseq. Also confirmed by searching for the string GATCGGAAGAGCAC, 
+       which is used in TruSeq ChIP experiments.
 
     $$\\[0.5in]$$
 
@@ -619,7 +620,11 @@ test your code.
 ## Finding a sequence in a fasta file?
 
 39. How many times does sequence "GATTACA" appear in this fasta file? `/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/WholeGenomeFasta/genome.fa`
-    a) Answer : 694879 times
+    a) Answer : 694879 times 
+        ```{bash}
+        # See q39.py
+        $ python3 src/q39.py GATTACA /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/WholeGenomeFasta/genome.fa
+        ```
 
     $$\\[0.5in]$$
 
@@ -629,9 +634,10 @@ test your code.
 40. Use this gtf file (`/reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Annotation/Genes/genes.gtf`)
 and the Unix `awk` command to keep only the lines where first column is "chr11"
 and the fourth column is greater than 100,000. How many lines are in the output?
-    a) Answer : 
-    ```{r}
-    ```
+    a) Answer : 54789
+        ```{bash}
+        $ awk '{if($1 == "chr11" && $4 > 100000){print $0}}' /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Annotation/Genes/genes.gtf  | wc -l
+        ```
 
     $$\\[0.5in]$$
 
@@ -647,17 +653,25 @@ folder are two files:
   -   mysteryData_R1.fastq.gz
   -   mysteryData_R2.fastq.gz
   What kind of sequencing experiment are these data derived from?
-    a) Answer : 
-    ```{r}
-    ```
+    a) Answer : RNASeq (determined by adapter content reported from FastQC). From the source code of fastqc, the Illumina Universal Adapter is AGATCGGAAGAG.
+        ```{bash}
+        $ ml load FastQC/0.11.9-Java-11.0.2
+        $ fastqc -o data/mystery-R2 /gpfs0/scratch/mvc002/mysteryData_R2.fastq.gz
+        ```
+        ![](images/mystery_R1-fastqc.png){width=50%}
 
     $$\\[0.5in]$$
 
 
 42. What species do these reads come from?
-    a) Answer : 
-    ```{r}
-    ```
+    a) Answer : Staphylococcus haemolyticus
+        ```{bash}
+        $ ml load GCC/10.3.0  OpenMPI/4.1.1 BLAST+/2.11.0
+        $ gunzip -c /gpfs0/scratch/mvc002/mysteryData_R1.fastq.gz | awk '{if(NR % 2 == 0 && NR % 4 != 0){print $0}}' > mystery-R1.fa
+        $ gunzip -c /gpfs0/scratch/mvc002/mysteryData_R2.fastq.gz | awk '{if(NR % 2 == 0 && NR % 4 != 0){print $0}}' > mystery-R2.fa
+        $ sbatch --cpus-per-task=32 --time=1-0 --wrap="blastx -num_threads 32 -db /reference/blast_database/blast/db/nr/02feb2022/nr -query mystery-R1.fa"
+        $ sbatch --cpus-per-task=32 --time=1-0 --wrap="blastx -num_threads 32 -db /reference/blast_database/blast/db/nr/02feb2022/nr -query mystery-R2.fa"
+        ```
 
     $$\\[0.5in]$$
 
