@@ -664,14 +664,23 @@ folder are two files:
 
 
 42. What species do these reads come from?
-    a) Answer : Staphylococcus haemolyticus
+    a) Answer : Olsenella massiliensis     Corynebacterium provencense  Staphylococcus haemolyticus
         ```{bash}
         $ ml load GCC/10.3.0  OpenMPI/4.1.1 BLAST+/2.11.0
         $ gunzip -c /gpfs0/scratch/mvc002/mysteryData_R1.fastq.gz | awk '{if(NR % 2 == 0 && NR % 4 != 0){print $0}}' > mystery-R1.fa
         $ gunzip -c /gpfs0/scratch/mvc002/mysteryData_R2.fastq.gz | awk '{if(NR % 2 == 0 && NR % 4 != 0){print $0}}' > mystery-R2.fa
         $ sbatch --cpus-per-task=32 --time=1-0 --wrap="blastx -num_threads 32 -db /reference/blast_database/blast/db/nr/02feb2022/nr -query mystery-R1.fa"
         $ sbatch --cpus-per-task=32 --time=1-0 --wrap="blastx -num_threads 32 -db /reference/blast_database/blast/db/nr/02feb2022/nr -query mystery-R2.fa"
+
+
+        $ gunzip -c /gpfs0/scratch/mvc002/mysteryData_R1.fastq.gz | grep "^@" -A 1 | grep -v "\-\-" > mystery-R1.fa
+        $ # Cleaned up header in vim, %s/ length=150//g, %s/ [0-9]\{1,10\}//gc
+
         ```
+
+
+
+
 
     $$\\[0.5in]$$
 
@@ -682,8 +691,9 @@ folder are two files:
 allows for ambiguous bases in the query
 (https://droog.gs.washington.edu/parc/images/iupac.html)
     a) Answer : 
-    ```{r}
-    ```
+        ```{bash}
+        $ python3 src/q43.py MGS test2.fa       # See out-q43.txt
+        ```
 
     $$\\[0.5in]$$
 
