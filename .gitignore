@@ -1,6 +1,5 @@
 *.pdf
 .*.swp
-images
 data
 *.out
 *.fastq
