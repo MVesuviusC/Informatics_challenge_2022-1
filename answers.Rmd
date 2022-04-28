@@ -615,8 +615,8 @@ test your code.
     a) Answer : 
 
         ```{bash}
-        # See q38.py
-        $ python3 -m pdb q38.py /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz  trim.fastq
+        # See src/q38.py
+        $ python3 src/q38.py /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz  trim.fastq
         ```
 
     $$\\[0.5in]$$
@@ -632,7 +632,7 @@ test your code.
     a) Answer : 694879 times 
 
         ```{bash}
-        # See q39.py
+        # See src/q39.py
         $ python3 src/q39.py GATTACA /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/WholeGenomeFasta/genome.fa
         ```
 
