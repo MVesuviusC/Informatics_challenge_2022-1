@@ -301,6 +301,10 @@ result in what percentage of false positives in your "significant" tests?
     ```
     a) Answer : 
         A file showing the lengths of the chromosomes about the centromere (REVISIT).
+        #MVC#########################################################################
+        # This is the bed format, defined by three (or more) columns where the first
+        # column is the chr, the second is the start of a range (0-indexed) and the
+        # third is the end of the range (1-indexed). See https://genome.ucsc.edu/FAQ/FAQformat.html#format1
     
         $$\\[0.5in]$$
     
@@ -323,10 +327,24 @@ cyl. Include a title. Be sure the colors used are color-blind friendly.
     a) Answer : 
 
         ```{r}
-        > cyl4 <- mtcars[mtcars$cyl == 4,]
-        > cyl6 <- mtcars[mtcars$cyl == 6,]
-        > cyl8 <- mtcars[mtcars$cyl == 8,]
-        > plot(x=cyl4$disp, y=cyl4$mpg, main="MPG vs Engine Displacement", xlab="Engine Displacement", ylab="MPG", col=c("black"), pch=c(17), cex=c(1.5), xlim=c(0,max(mtcars$disp)), ylim=c(0, max(mtcars$mpg)))
+        > cyl4 <- mtcars[mtcars$cyl == 4, ]
+        > cyl6 <- mtcars[mtcars$cyl == 6, ]
+        > cyl8 <- mtcars[mtcars$cyl == 8, ]
+        #MVC#########################################################################
+        # Just a suggestion, based on tidyverse style guide: https://style.tidyverse.org/
+        # if the function has more than two arguments, put each on their own line
+        # Also, put spaces around "=". Both make the code more readable. Optionally, some
+        # folks like to make the equal signs align as well, but I usually don't
+        > plot(x = cyl4$disp,
+               y = cyl4$mpg,
+               main = "MPG vs Engine Displacement",
+               xlab = "Engine Displacement",
+               ylab = "MPG",
+               col = c("black"),
+               pch = c(17),
+               cex = c(1.5),
+               xlim = c(0, max(mtcars$disp)),
+               ylim = c(0, max(mtcars$mpg)))
         > points(x=cyl6$disp, y=cyl6$mpg, col="blue", pch=18, cex=1.5)
         > points(x=cyl8$disp, y=cyl8$mpg, col="red", pch=19, cex=1.5)
         ```
@@ -399,6 +417,9 @@ providing the Pearson's correlation and the *p*-value
         $ ml load GCC/9.3.0 Bowtie2/2.4.1
         # Trim - no bonus points so I won't do it
         $ sbatch --cpus-per-task=32 --wrap="bowtie2 --fr --threads=32 -x /reference/homo_sapiens/hg38/ucsc_assembly/illumina_download/Sequence/Bowtie2Index/genome -1 /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz -2 /gpfs0/scratch/mvc002/infoChallenge_2.fastq.gz -S data/infoChallenge.sam"
+        #MVC###################################################
+        # you might know this, but if you don't use the -S, you can pipe the output through
+        # samtools view -b to write out a bam file to save space
         ```
 
     $$\\[0.5in]$$
@@ -413,6 +434,9 @@ providing the Pearson's correlation and the *p*-value
         $ ml load IGV/2.8.0-Java-11.0.2
         $ sbatch --time=2-0 --wrap="igvtools index data/infoChallenge_sort.sam"
         ```
+        #MVC######################################################################
+        # This works, you can also use samtools index instead of igvtools index.
+        # I'd bet that igvtools is calling samtools anyways.
 
         ![](images/IGV-view.png){width=50%}
 
@@ -425,6 +449,10 @@ providing the Pearson's correlation and the *p*-value
        specific region (and this covered the whole genome), this dataset must be
        from ChIPseq. Also confirmed by searching for the string GATCGGAAGAGCAC, 
        which is used in TruSeq ChIP experiments.
+       #MVC#####################################################################
+       # We can look at this together if you'd like but it's RNAseq. If you zoom in
+       # further in IGV you should be able to see reads spanning introns that align
+       # to genes.
 
     $$\\[0.5in]$$
 
@@ -440,7 +468,13 @@ functions. Use either pipe (`%>%` or `|>`).
 
         ```{r}
         > library(dplyr)
-        > mtcars %>% dplyr::filter(cyl != 8) %>% group_by(gear) %>% summarize(mean=mean(mpg))
+        #MVC#################################################################
+        # Just a suggestion: each element of a pipe on it's own line and tabbed
+        # in once after the first element
+        > mtcars %>%
+                    dplyr::filter(cyl != 8) %>%
+                    group_by(gear) %>%
+                    summarize(mean = mean(mpg))
         ```
 
     $$\\[0.5in]$$
@@ -549,6 +583,11 @@ should align.
         ```
         ![](images/q33.png){width=50%}
 
+#MVC###########################################################################
+# this works, but aligning the axis manually is painful
+# check out cowplot for an easier way to handle this: 
+# https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html
+
     $$\\[0.5in]$$
 
 
@@ -562,7 +601,10 @@ repository
         $ ml load GCC/8.3.0  OpenMPI/3.1.4 SRA-Toolkit/2.10.4
         $ prefetch SRR10197556
         ```
-
+#MVC#########################################################################
+# technically correct, but this gets you an unusable file. To use the data you
+# need to do either fastq-dump SRR10197556 or fasterq-dump SRR10197556 to get
+# fastq files
     $$\\[0.5in]$$
 
 
@@ -576,7 +618,8 @@ then share code to trim off the path ("path/to/target/")
         $ VAR=path/to/target/file.txt
         $ echo $VAR | rev | cut -d"/" -f1 | rev
         ```
-
+#MVC########################################################################
+# so much longer than ${VAR##*/}
     $$\\[0.5in]$$
 
 
@@ -588,6 +631,8 @@ then share code to trim off the file extension (".txt")
         $ VAR=path/to/target/file.txt
         $ echo $VAR | cut -d"." -f1
         ```
+#MVC########################################################################
+# also longer than ${VAR%.txt}
 
     $$\\[0.5in]$$
 
@@ -602,7 +647,6 @@ many lines had a match?
         $ gunzip -c /gpfs0/scratch/mvc002/infoChallenge_1.fastq.gz | grep -c GATACA
         472703
         ```
-
     $$\\[0.5in]$$
 
 
