@@ -713,7 +713,9 @@ folder are two files, mysteryData_R1.fastq.gz, mysteryData_R2.fastq.gz :
         $ fastqc -o data/mystery-R2 /gpfs0/scratch/mvc002/mysteryData_R2.fastq.gz
         ```
         ![](images/mystery_R1-fastqc.png){width=50%}
-
+#MVC####################################################################################
+## Good intuition and there may be some clues in the fastq output, but ultimately that 
+## won't tell you. The same adapters are use for lots of different types of sequencing.
     $$\\[0.5in]$$
 
 
@@ -726,7 +728,8 @@ folder are two files, mysteryData_R1.fastq.gz, mysteryData_R2.fastq.gz :
         $ sbatch --cpus-per-task=32 --time=0-12 --wrap="diamond makedb --in /reference/diamond_database/nr/27aug17/nr.faa -d nr --threads 32"
         $ sbatch --time=0-12 --cpus-per-task=32 --wrap="diamond blastx --threads 32 --db nr --query mystery-R1.fa --max-target-seqs 5 --out mystery-R1.diamond"
         ```
-
+#MVC###################################################################################
+# Nope!
 
 
 
